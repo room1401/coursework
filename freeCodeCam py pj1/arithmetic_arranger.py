@@ -28,7 +28,6 @@ def arithmetic_arranger(problems, solve = False):
   ln4 = "\n" if solve else ""
   for i in range(len(problems)):
     margin = len(max(problems[i].split(), key=len)) + 2
-    print(margin)
     padding = "" if i == len(problems) - 1 else " " * 4
     num1, optr, num2 = problems[i].split()
     ln1 += num1.rjust(margin) + padding
