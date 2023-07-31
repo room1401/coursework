@@ -1,7 +1,6 @@
 import copy
 import random
 from collections import Counter
-# Consider using the modules imported above.
 
 
 class Hat:
@@ -32,5 +31,4 @@ def experiment(hat, expected_balls, num_balls_drawn, num_experiments):
     hatCopy = copy.deepcopy(hat)
     if Counter(hatCopy.draw(num_balls_drawn)) >= Counter(exball):
       winCount += 1
-
   return winCount / num_experiments
