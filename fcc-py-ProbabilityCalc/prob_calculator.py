@@ -1,5 +1,4 @@
-import copy
-import random
+import random, copy
 from collections import Counter
 
 
@@ -15,8 +14,8 @@ class Hat:
     if nDraw > len(self.contents):
       return self.contents
     for i in range(nDraw):
-      self.drawn.append(self.contents.pop(random.randrange(len(
-        self.contents))))
+      self.drawn.append(self.contents.pop(
+        random.randrange(len(self.contents))))
     return self.drawn
 
 
