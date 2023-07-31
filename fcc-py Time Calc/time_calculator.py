@@ -18,10 +18,8 @@ def add_time(start, duration, dayWeek=None):
     minute = f'{minute:02d}' if minute < 10 else str(minute)
     return [str(hour) + ':' + minute + ' ' + apm], day
 
-  week = [
-    'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday',
-    'Saturday'
-  ]
+  week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 
+          'Thursday', 'Friday', 'Saturday']
 
   startHour, startMinute = convert24(start)
   newHour = startHour + int(duration.split(':')[0])
