@@ -4,22 +4,16 @@ def arithmetic_arranger(problems, solve = False):
 
   def checkError(lst):
     errMsg = []
-    if len(lst) > 5:
-      errMsg.append("Error: Too many problems.")
+    if len(lst) > 5: 
+      return "Error: Too many problems."
     for obj in lst:
       if not (re.search('\s[+|-]\s', obj)):
-        errMsg.append("Error: Operator must be '+' or '-'.")
+        msg.append("Error: Operator must be '+' or '-'.")
       if not (re.search('^\d+\s.\s\d+$', obj)):
-        errMsg.append("Error: Numbers must only contain digits.")
+        msg.append("Error: Numbers must only contain digits.")
       if len(max(obj.split(), key=len)) > 4:
-        errMsg.append("Error: Numbers cannot be more than four digits.")
-    return errMsg
-
-  def calc(n1, n2, op):
-    if op == '+':
-      return str(int(n1) + int(n2))
-    else:
-      return str(int(n1) - int(n2))
+        msg.append("Error: Numbers cannot be more than four digits.")
+    return msg
 
   if checkError(problems):
     return '\n'.join(checkError(problems))
@@ -34,6 +28,6 @@ def arithmetic_arranger(problems, solve = False):
     ln2 += optr + num2.rjust(margin - 1) + padding
     ln3 += "-" * margin + padding
     if solve:
-      ln4 += calc(num1, num2, optr).rjust(margin) + padding
+      ln4 += str(int(n1) + int(op+n2)).rjust(margin) + padding
   
   return ln1 + ln2 + ln3 + ln4
