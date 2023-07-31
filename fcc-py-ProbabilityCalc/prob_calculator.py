@@ -3,11 +3,8 @@ from collections import Counter
 
 
 class Hat:
-
   def __init__(self, **kwargs):
-    self.contents = []
-    for k, v in kwargs.items():
-      self.contents.extend(k for i in range(v))
+    self.contents = list(Counter(kwargs).elements())
     self.drawn = []
 
   def draw(self, nDraw):
@@ -20,14 +17,11 @@ class Hat:
 
 
 def experiment(hat, expected_balls, num_balls_drawn, num_experiments):
-  # transform target into list
-  exball = []
-  for k, v in expected_balls.items():
-    exball.extend(k for i in range(v))
-  # use deepcopy to draw and reset
+  # convert target to list obj
+  target = list(Counter(expected_balls).elements())
   winCount = 0
   for i in range(num_experiments):
     hatCopy = copy.deepcopy(hat)
-    if Counter(hatCopy.draw(num_balls_drawn)) >= Counter(exball):
+    if Counter(hatCopy.draw(num_balls_drawn)) >= Counter(target):
       winCount += 1
   return winCount / num_experiments
