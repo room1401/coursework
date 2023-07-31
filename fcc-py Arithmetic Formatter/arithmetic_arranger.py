@@ -3,7 +3,7 @@ import re
 def arithmetic_arranger(problems, solve = False):
 
   def checkError(lst):
-    errMsg = []
+    msg = []
     if len(lst) > 5: 
       return "Error: Too many problems."
     for obj in lst:
@@ -28,6 +28,6 @@ def arithmetic_arranger(problems, solve = False):
     ln2 += optr + num2.rjust(margin - 1) + padding
     ln3 += "-" * margin + padding
     if solve:
-      ln4 += str(int(n1) + int(op+n2)).rjust(margin) + padding
+      ln4 += str(int(num1) + int(optr + num2)).rjust(margin) + padding
   
   return ln1 + ln2 + ln3 + ln4
