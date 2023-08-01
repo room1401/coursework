@@ -57,18 +57,18 @@ def create_spend_chart(request):
         header[i] += item[i].center(3)
     return header
 
+  margin = 4
   title = 'Percentage spent by category'
+  yAxis = [(str(x * 10) + '|').rjust(margin) for x in range(0, 11)]
+  xAxis = ' ' * margin + '-' * (3 * len(request) + 1)
 
-  meter = [(str(x * 10) + '|').rjust(4) for x in range(0, 11)]
-  expense = ['o' * (x.get_expenseR() + 1) for x in request]
-  expense = justify(expense)
-  chart = '\n'.join(joinFlip(meter, expense)[::-1])
-
-  xAxis = ' ' * 4 + '-' * (3 * len(request) + 1)
+  bars = ['o' * (x.get_expenseR() + 1) for x in request]
+  bars = justify(bars)
+  chart = '\n'.join(joinFlip(yAxis, bars)[::-1])
 
   label = [x.name for x in request]
   label = justify(label)
-  padding = [' ' * 4 for x in range(len(label[0]))]
+  padding = [' ' * margin for x in range(len(label[0]))]
   vLabel = '\n'.join(joinFlip(padding, label))
 
   return '\n'.join([title, chart, xAxis, vLabel])
