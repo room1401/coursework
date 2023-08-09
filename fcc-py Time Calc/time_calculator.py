@@ -1,13 +1,13 @@
 def add_time(start, duration, dayWeek=None):
 
-  def convert24(time):
+  def convert24(time: str):
     hour, minute = time.split()[0].split(':')
     hour = int(hour)
     if ('PM' in time and hour < 12):
       hour += 12
     return hour, int(minute)
 
-  def convert12(hour, minute):
+  def convert12(hour: int, minute: int):
     hour += minute // 60
     day = hour // 24
     apm = 'PM' if hour % 24 >= 12 else 'AM'
