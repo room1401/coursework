@@ -15,8 +15,7 @@ class Category:
   def deposit(self, amt, desc=''):
     self.ledger.append({'amount': amt, 'description': desc})
 
-  def get_balance(self):
-    balance = 0
+  def get_balance(self, balance = 0):
     if not self.ledger:
       return balance
     for i in range(len(self.ledger)):
@@ -62,12 +61,10 @@ def create_spend_chart(request):
   yAxis = [(str(x * 10) + '|').rjust(margin) for x in range(0, 11)]
   xAxis = ' ' * margin + '-' * (3 * len(request) + 1)
 
-  bars = ['o' * (x.get_expenseR() + 1) for x in request]
-  bars = justify(bars)
+  bars = justify(['o' * (x.get_expenseR() + 1) for x in request])
   chart = '\n'.join(joinFlip(yAxis, bars)[::-1])
 
-  label = [x.name for x in request]
-  label = justify(label)
+  label = justify([x.name for x in request])
   padding = [' ' * margin for x in range(len(label[0]))]
   vLabel = '\n'.join(joinFlip(padding, label))
 
