@@ -2,9 +2,8 @@ import re
 
 def arithmetic_arranger(problems, solve = False):
 
-  def checkError(lst):
-    msg = []
-    if len(lst) > 5: 
+  def checkError(lst, msg=[]):
+    if len(lst) > 5:
       return "Error: Too many problems."
     for obj in lst:
       if not (re.search('\s[+|-]\s', obj)):
