@@ -1,12 +1,5 @@
 def add_time(start, duration, dayWeek=None):
 
-  def convert24(time: str):
-    hour, minute = time.split()[0].split(':')
-    hour = int(hour)
-    if ('PM' in time and hour < 12):
-      hour += 12
-    return hour, int(minute)
-
   def convert12(hour: int, minute: int):
     hour += minute // 60
     day = hour // 24
@@ -17,9 +10,10 @@ def add_time(start, duration, dayWeek=None):
   week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 
           'Thursday', 'Friday', 'Saturday']
 
-  startHour, startMinute = convert24(start)
-  newHour = startHour + int(duration.split(':')[0])
-  newMinute = startMinute + int(duration.split(':')[1])
+  startH, startM = [int(x) for x in start.split()[0].split(':')]
+  if ('PM' in start and startH < 12): startH += 12
+  newHour = startH + int(duration.split(':')[0])
+  newMinute = startM + int(duration.split(':')[1])
   newTime, dayPassed = convert12(newHour, newMinute)
 
   if dayWeek:
