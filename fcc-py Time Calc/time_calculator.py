@@ -11,12 +11,8 @@ def add_time(start, duration, dayWeek=None):
     hour += minute // 60
     day = hour // 24
     apm = 'PM' if hour % 24 >= 12 else 'AM'
-    hour %= 24
-    if hour > 12: hour %= 12
-    elif hour == 0: hour = 12
-    minute %= 60
-    minute = f'{minute:02d}' if minute < 10 else str(minute)
-    return [str(hour) + ':' + minute + ' ' + apm], day
+    hour = hour % 12 if hour % 12 != 0 else 12
+    return [str(hour) + f':{minute%60:02} ' + apm], day
 
   week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 
           'Thursday', 'Friday', 'Saturday']
@@ -28,7 +24,7 @@ def add_time(start, duration, dayWeek=None):
 
   if dayWeek:
     newDay = week[(week.index(dayWeek.capitalize()) + dayPassed) % 7]
-    newTime.append(', ' + newDay)
+    newTime.append(f', {newDay}')
 
   if dayPassed == 1:
     newTime.append(' (next day)')
