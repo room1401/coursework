@@ -1,7 +1,7 @@
+import numpy as np
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-import numpy as np
 
 
 # import data
@@ -54,7 +54,7 @@ def draw_heat_map():
     # set up the matplotlib figure
     fig, ax = plt.subplots(figsize=(11, 9))
     # draw the heatmap with 'sns.heatmap()'
-    sns.heatmap(df_corr, mask=df_mask,annot=True, annot_kws={"size": 7}, 
+    sns.heatmap(df_corr, mask=df_mask,annot=True, annot_kws={"size": 8}, 
             fmt=".1f", linewidth=.5, vmax=0.30, vmin=-0.15, center=0, 
             cbar_kws={'shrink':0.5, 'ticks':[-0.08, 0.00, 0.08, 0.16, 0.24]},)
             
