@@ -24,38 +24,45 @@ or error handling.
 '''
 
 # Write your solution here
-def conv(lst):
-    for i, val in enumerate(lst):
-        if val.isalpha():
-            lst[i] = f"var['{val}']"
-
-    return " ".join(lst)
+def conv(val, var):
+    return var[val] if val.isalpha() else int(val)
 
 def calc(id, op1, op2, var):
-    op2 = eval(conv([op2]))
-    op = {"MOV":(0,0,2), "MUL":(1,1,1), "ADD":(1,0,2), "SUB":(1,0,0)}
+    op1, op2 = var[op1], conv(op2, var)
+    op = {"MOV": (0,0,2), "MUL": (1,1,1), "ADD": (1,0,2), "SUB": (1,0,0)}
     i, j, k = op[id]
+    
     return op1 * i  * [1, op2][j] + op2 * [-1, 0, 1][k]
+
+def judge(op1, op, op2, var):
+    op1, op2 = var[op1], conv(op2, var)
+    if op == "==":
+        return op1 == op2
+    else:
+        if ("=" not in op and op1 == op2) or \
+            ("!" in op and op1 == op2) or \
+            ("<" in op and op1 > op2) or \
+            (">" in op and op1 < op2):
+            return False
+    
+    return True
 
 def run(pgm):
     output = []
     var = dict((chr(x), 0) for x in range(65, 91))
-    loca = dict()
-    for i, cmd in enumerate(pgm):
-        if cmd.endswith(":"):
-            loca[cmd[:-1]] = i
+    loca = dict((cmd[:-1], i) for i, cmd in enumerate(pgm) if cmd.endswith(":"))
     
     step = 0
     while step < len(pgm):
         cmd, *par = pgm[step].split()
         if cmd == "PRINT":
-            output.append(eval(conv([par[0]])))
+            output.append(conv(par[0], var))
         elif cmd == "JUMP":
             step = loca[par[0]]
         elif len(par) == 2:
-            var[par[0]] = calc(cmd, var[par[0]], par[1], var)
+            var[par[0]] = calc(cmd, *par, var)
         elif cmd == "IF":
-            if eval(conv(par[:3])):
+            if judge(*par[:3], var):
                 step = loca[par[-1]]
         elif cmd == "END":
             break
