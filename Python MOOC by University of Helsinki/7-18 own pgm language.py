@@ -32,7 +32,6 @@ def conv(lst):
     return " ".join(lst)
 
 def calc(id, op1, op2, var):
-    op1 = eval(conv([op1]))
     op2 = eval(conv([op2]))
     op = {"MOV":(0,0,2), "MUL":(1,1,1), "ADD":(1,0,2), "SUB":(1,0,0)}
     i, j, k = op[id]
@@ -54,7 +53,7 @@ def run(pgm):
         elif cmd == "JUMP":
             step = loca[par[0]]
         elif len(par) == 2:
-            var[par[0]] = calc(cmd, *par, var)
+            var[par[0]] = calc(cmd, var[par[0]], par[1], var)
         elif cmd == "IF":
             if eval(conv(par[:3])):
                 step = loca[par[-1]]
