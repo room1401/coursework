@@ -39,10 +39,8 @@ def judge(op1, op, op2, var):
     if op == "==":
         return op1 == op2
     else:
-        if ("=" not in op and op1 == op2) or \
-            ("!" in op and op1 == op2) or \
-            ("<" in op and op1 > op2) or \
-            (">" in op and op1 < op2):
+        if ("=" not in op and op1 == op2) or ("!" in op and op1 == op2) or \
+            ("<" in op and op1 > op2) or (">" in op and op1 < op2):
             return False
     
     return True
