@@ -62,6 +62,5 @@ class RockPaperScissors(WordGame):
             res.remove(1)
         if word2 not in judge or (word1 in judge and word1 != judge[word2]):
             res.remove(2)
-
         if res:
             return res.pop()
