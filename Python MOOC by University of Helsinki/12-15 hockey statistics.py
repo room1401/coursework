@@ -31,8 +31,7 @@ class Table:
     def create_table(self, data: list):
         for p in data:
             name, team, nation = p["name"], p["team"], p["nationality"]
-            curr = Player(name, team, int(p["games"]), int(p["goals"]), int(p["assists"]))
-            self.__players[name] = curr
+            self.__players[name] = Player(name, team, int(p["games"]), int(p["goals"]), int(p["assists"]))
             self.__teams[team] = self.__teams.get(team, []) + [name]
             self.__ctry[nation] = self.__ctry.get(nation, []) + [name]
 
