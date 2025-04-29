@@ -18,8 +18,7 @@ class Task:
         self.__is_finished = True
 
     def __str__(self) -> str:
-        return f"{self.id}: {self.description} ({self.workload} hours), \
-        programmer {self.programmer} {'' if self.__is_finished else 'NOT '}FINISHED"
+        return f"{self.id}: {self.description} ({self.workload} hours), programmer {self.programmer} {'' if self.__is_finished else 'NOT '}FINISHED"
 
 
 class OrderBook:
@@ -46,11 +45,8 @@ class OrderBook:
         
         raise ValueError
 
-    def finished_orders(self):
-        return [x for x in self.__tasks if x.is_finished()]
-        
-    def unfinished_orders(self):
-        return [x for x in self.__tasks if not x.is_finished()]
+    def finished_orders(self, tf=True):
+        return [x for x in self.__tasks if x.is_finished() == tf]
 
     def status_of_programmer(self, name: str):
         fin, f_time, uf_time = 0, 0, 0
@@ -82,14 +78,13 @@ class OrderApp:
         print("erroneous input")
 
     def insert(self):
-        desc = input("description: ")
-        data = input("programmer and workload estimate: ").split()
-        if len(data) < 2 or not data[1].isdigit():
+        try:
+            desc = input("description: ")
+            data = input("programmer and workload estimate: ").split()
+            self.__order.add_order(desc, data[0], int(data[1]))
+            print("added!")
+        except:
             self.warning()
-            return
-        
-        self.__order.add_order(desc, data[0], int(data[1]))
-        print("added!")
 
     def list_fin(self):
         res = self.__order.finished_orders()
@@ -99,33 +94,31 @@ class OrderApp:
             print("no finished tasks")
 
     def list_unfin(self):
-        res = self.__order.unfinished_orders()
+        res = self.__order.finished_orders(False)
         if res:
             [print(x) for x in res]
         else:
             print("no unfinished tasks")
 
     def mark(self):
-        id = input("id: ")
-        if not id.isdigit() or int(id) < 0 or int(id) > len(self.__order.all_orders()):
+        try:
+            id = input("id: ")
+            self.__order.mark_finished(int(id))
+            print("marked as finished")
+        except:
             self.warning()
-            return
-        
-        self.__order.mark_finished(int(id))
-        print("marked as finished")
 
     def list_pgm(self):
         print([x for x in self.__order.programmers()])
 
     def stats(self):
-        name = input("programmer: ")
-        if name not in self.__order.programmers(): 
+        try:
+            name = input("programmer: ")
+            done, pending, spent, remain = self.__order.status_of_programmer(name)
+            print(f"tasks: finished {done} not finished {pending},", \
+                  f"hours: done {spent} scheduled {remain}")
+        except:
             self.warning()
-            return
-        
-        done, pending, spent, remain = self.__order.status_of_programmer(name)
-        print(f"tasks: finished {done} not finished {pending},", \
-              f"hours: done {spent} scheduled {remain}")
 
     def execute(self):
         self.help()
