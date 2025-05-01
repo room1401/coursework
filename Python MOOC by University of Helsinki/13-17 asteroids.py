@@ -16,8 +16,8 @@ wall = res[0] - robot_w
 robot_x, robot_y = wall // 2, res[1] - robot_h
 
 rock_w, rock_h = rock.get_width(), rock.get_height()
-gnd = res[1] - rock_h
 rock_v = 1
+gnd = res[1] - rock_h
 army, id = {}, 1
 army_size, spawn = 3, 150
 
@@ -60,12 +60,15 @@ while True:
         x, y = army[ast]
         if y >= gnd:
             exit()
-        elif y + rock_h >= robot_y and (robot_x <= x <= robot_x + robot_w or robot_x <= x + rock_w <= robot_x + robot_w):
+        elif y + rock_h >= robot_y and (
+            robot_x <= x <= robot_x + robot_w or \
+            robot_x <= x + rock_w <= robot_x + robot_w):
             score += 1
             if score and not score % 10:
                 army_size += 1
             if score and not score % 20:
-                spawn -= 10
+                if spawn > 10:
+                    spawn -= 10
                 robot_v += 1
             
             dump.append(ast)
